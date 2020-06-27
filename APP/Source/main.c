@@ -99,12 +99,12 @@ void RTC_SetTime(void)
 {
 	//Set time
 	rtc_t rtc;
-    rtc.hour = 0x22; //  20:03:15 
-    rtc.min =  0x02;
+    rtc.hour = 0x13; //  20:03:15 
+    rtc.min =  0x32;
     rtc.sec =  0x00;
-    rtc.date = 0x20; //1st Jan 2016
-    rtc.month = 0x08;
-    rtc.year = 0x19;
+    rtc.date = 0x27; //1st Jan 2016
+    rtc.month = 0x06;
+    rtc.year = 0x20;
     rtc.weekDay = 2; // Friday: 5th day of week considering monday as first day.
 	///*##### Set the time and Date only once. Once the Time and Date is set, comment these lines
         //and re-flash the code. Else the time will be set every time the controller is reset*/

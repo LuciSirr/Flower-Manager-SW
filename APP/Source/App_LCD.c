@@ -8,6 +8,7 @@
  #include "lcd_hd44780.h"  // do not forget define the ports in header file.
  #include "App_TimingBlocks.h"
  #include "App_LCD.h"
+ #include "App_WateringControl.h"
 
  bool LCD_BacklightStatus = FALSE;
  uint8_t LCD_Menu0_Index = LCD_INFO_Screen;
@@ -38,6 +39,10 @@
 		 	//AppLCD_DisplayTime();
 		 	//AppLCD_DisplayTemp();
 		 	break;
+
+			case LCD_TEST:
+			lcd_puts("TEST");
+			break;
 
 		 	case LCD_OUTPUT_1:
 		 	lcd_puts("OUTPUT 1");
@@ -83,6 +88,10 @@
 			case 3:
 			lcd_puts("2");
 			break;
+
+			case 4:	
+			lcd_puts("Test Watering");
+			break;
 	 	}
 	 	LCD_PreviousMenu1_Index = LCD_Menu1_Index;
  	}
@@ -95,14 +104,17 @@
 
 	if(LCD_BacklightStatus == TRUE)
 	{
-		if(CycleDelay(&LCD_BacklightTimeout, LCD_BACKLIGHT_TIMEOUT))
-		{
-			LCD_BacklightStatus = FALSE;
-			BACKLIGHT_DISABLE;
-			lcd_clrscr(); // Clean screen to avoid pixels burn out
-			LCD_Menu0_Index = 1;
-			LCD_Menu1_Index = 1;
-			LCD_MainLevel_Index = 0;
+		if(WateringTrigger == FALSE){
+
+			if(CycleDelay(&LCD_BacklightTimeout, LCD_BACKLIGHT_TIMEOUT))
+			{
+				LCD_BacklightStatus = FALSE;
+				BACKLIGHT_DISABLE;
+				lcd_clrscr(); // Clean screen to avoid pixels burn out
+				LCD_Menu0_Index = 1;
+				LCD_Menu1_Index = 1;
+				LCD_MainLevel_Index = 0;
+			}
 		}
 	}
 
@@ -117,9 +129,16 @@
 					if((*Down == TRUE) & (LCD_Menu0_Index > 1)) LCD_Menu0_Index--;
 					if((*Ok   == TRUE) & (LCD_Menu0_Index > 1)) 
 					{
-						LCD_PreviousMenu1_Index = 0; // force lcd refresh
-						LCD_MainLevel_Index = 1;	//Jump to sub level
-						AppLCD_MenuLevel1();
+						if(LCD_Menu0_Index == 2){
+							LCD_Menu1_Index = 4;
+							LCD_MainLevel_Index = 2;				
+							WateringTrigger|= TRUE;
+							AppLCD_MenuLevel1();
+						}else{
+							LCD_PreviousMenu1_Index = 0; // force lcd refresh
+							LCD_MainLevel_Index = 1;	//Jump to sub level
+							AppLCD_MenuLevel1();
+						}
 						break;
 					}
 					if((*No   == TRUE)) LCD_Menu0_Index = 1;
@@ -140,6 +159,17 @@
 					} 
 
 					AppLCD_MenuLevel1();
+					break;
+
+				case 2:
+					if((WateringTrigger == FALSE))
+					{
+						LCD_Menu1_Index = 1;
+						LCD_PreviousMenu0_Index = 0; // force lcd refresh
+						LCD_MainLevel_Index = 0;	 // jump to sub level
+						AppLCD_MenuLevel0();
+						break;
+					}
 					break;
 			}
 		}

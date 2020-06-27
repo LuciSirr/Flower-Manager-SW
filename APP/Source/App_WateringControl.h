@@ -80,6 +80,8 @@ typedef struct
 	uint16_t WateringTime;		// Time x*100ms 
 }WaterOutput_t;
 
+extern bool WateringTrigger;
+
  void App_WaterThePlants(uint8_t day_hour, uint8_t minute);
  void App_WateringControl(void);
  uint16_t App_CalculateDayAverage(uint8_t day_hour);

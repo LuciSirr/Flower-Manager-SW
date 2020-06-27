@@ -14,11 +14,12 @@
 
 typedef enum _MainMenuItems_t {
 	LCD_INFO_Screen	= 1,
-	LCD_OUTPUT_1	= 2,
-	LCD_OUTPUT_2	= 3,
-	LCD_OUTPUT_3	= 4,
-	LCD_OUTPUT_4	= 5,
-	LCD_OUTPUT_5	= 6,
+	LCD_TEST		= 2,
+	LCD_OUTPUT_1	= 3,
+	LCD_OUTPUT_2	= 4,
+	LCD_OUTPUT_3	= 5,
+	LCD_OUTPUT_4	= 6,
+	LCD_OUTPUT_5	= 7,
 } MainMenuItems_t;
 
 

@@ -17,59 +17,59 @@ uint16_t day_average2;
 
 bool WateringTrigger = FALSE;
 
-// Tomato 1 - 15*C - 40s, 35*C - 320s
+// Tomato - 15*C - 50s, 35*C - 150s
 WaterOutput_t Output_1 = {
 	.Enabled      = TRUE,
  	.ValvePORTx   = (uint8_t*)&VALVE1_PORT,
  	.ValveGate    = VALVE1_GATE,
  	.ValveOpen    = FALSE,
-	.Const_K      = 14,
-	.Const_Q      = 170,
- 	.WateringTime = 200
+	.Const_K      = 5,
+	.Const_Q      = 25,
+ 	.WateringTime = 150
 };
 
-// Tomato 2 - 15*C - 20s, 35*C - 200s		
+// Tomato - 15*C - 40s, 35*C - 140s	
 WaterOutput_t Output_2 = {
 	.Enabled      = TRUE,
 	.ValvePORTx   = (uint8_t*)&VALVE2_PORT,
 	.ValveGate    = VALVE2_GATE,
 	.ValveOpen	  = FALSE,
-	.Const_K      = 9,
-	.Const_Q      = 115,
-	.WateringTime = 200
+	.Const_K      = 5,
+	.Const_Q      = 35,
+	.WateringTime = 120
 };
 
-// Tomato 2 - 15*C - 20s, 35*C - 200s
+// Tomato - 15*C - 40s, 35*C - 140s	
 WaterOutput_t Output_3 = {
 	.Enabled      = TRUE,
 	.ValvePORTx  = (uint8_t*)&VALVE3_PORT,
 	.ValveGate   = VALVE3_GATE,
 	.ValveOpen  = FALSE,
-	.Const_K = 9,
-	.Const_Q = 115,
-	.WateringTime = 200
+	.Const_K = 5,
+	.Const_Q = 35,
+	.WateringTime = 120
 };
 
-// Tomato 2 - 15*C - 40s, 35*C - 200s
+// Tomato - 15*C - 40s, 35*C - 140s	
 WaterOutput_t Output_4 = {
 	.Enabled      = TRUE,
 	.ValvePORTx  = (uint8_t*)&VALVE4_PORT,
 	.ValveGate   = VALVE4_GATE,
 	.ValveOpen	 = FALSE,
-	.Const_K = 9,
-	.Const_Q = 115,
-	.WateringTime = 200
+	.Const_K = 5,
+	.Const_Q = 35,
+	.WateringTime = 120
 };
 
-// Kohlrabi - 15*C - 30s, 35*C - 190s
+// Tomato - 15*C - 40s, 35*C - 140s		
 WaterOutput_t Output_5 = {
 	.Enabled      = TRUE,
 	.ValvePORTx  = (uint8_t*)&VALVE5_PORT,
 	.ValveGate   = VALVE5_GATE,
 	.ValveOpen	 = FALSE,
-	.Const_K = 8,
-	.Const_Q = 90,
-	.WateringTime = 200
+	.Const_K = 5,
+	.Const_Q = 35,
+	.WateringTime = 120
 };
 
  void App_UpdateWateringTime(uint16_t DayAvgTemp, WaterOutput_t *Output)
@@ -85,7 +85,7 @@ WaterOutput_t Output_5 = {
 	static bool EveningWateringDone = FALSE;
 
  	// Morning Plants Watering
-	if((day_hour == 0x08) & (minute == 0x10))
+	/*if((day_hour == 0x08) & (minute == 0x10))
 	{
 		if(MorningWateringDone == FALSE)
 		{
@@ -104,7 +104,7 @@ WaterOutput_t Output_5 = {
 	else
 	{
 		MorningWateringDone = FALSE;
-	}
+	}*/
 
 	// Evening Plants Watering
 	if((day_hour == 0x20) & (minute == 0x10))
@@ -269,7 +269,7 @@ WaterOutput_t Output_5 = {
 			break;
 
 		case START_PUMP:					// Start Pump full power									
-			PUMP_PWM_REG = 180;	
+			PUMP_PWM_REG = 0xFF;	
 			ValveStateMachine = WATERING_TIME;
 			break;
 
