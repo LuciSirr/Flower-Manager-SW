@@ -114,6 +114,7 @@ void RTC_SetTime(void)
 
 int main(void)
 {
+	//hello
 	uint8_t CompilerInfo = AppInformation.uAppCRC;	// Tell the linker that the AppInformation is not for fun
 
 	// Disable Watchdog, important for Watchdog reset
